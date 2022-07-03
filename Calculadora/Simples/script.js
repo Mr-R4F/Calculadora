@@ -1,87 +1,65 @@
 $(document).ready(function () {
     let num = '';
-    
+
     // Deleta itens
     $("#del").click(() => {
         num = '';
         $("#painel").text('');
-        $("button").removeAttr('disabled', 'off');
-    })
-
-    $("#ac").click(() => {
-        num = num.substring(0, num.length - 1); //extrair string da posição 0 a ´-1´.
-        $("#painel").text(num);
-        if (num.length < 16) 
-            $("button").removeAttr('disabled', 'off');
-        console.log(num);
+        tamanhoCampo(num);
     });
 
-    //Preenche
-    $("#num-0").click(() => {
-        num += 0;
-        console.log(num);
-        $("#painel").text(parseInt(num));
-        if (num.length == 1) 
-            num = '';
+    $("#ac").click(() => {
+        num = num.substring(0, num.length - 1); //extrai a string.
+        $("#painel").text(num);
+        tamanhoCampo(num);
+    });
 
-        if (num.length > 16) 
-            $("button:not(#div, #sub, #add, #equal, #mult, #ac, #del)").attr('disabled', 'disabled');
-    })
+    // Adiciona números ao 'visor'.
 
-    $("#num-1").click(() => {
-        num += 1;
-        console.log(num);
-        $("#painel").text(parseInt(num));
-    })
-
-    $("#num-2").click(() => {
-        num += 2;
-        $("#painel").text(parseInt(num));
-        console.log(num);
-    })
-
-    $("#num-3").click(() => {
-        num += 3;
-        $("#painel").text(parseInt(num));
-        console.log(num);
-    })
-
-    $("#num-4").click(() => {
-        num += 4;
-        $("#painel").text(parseInt(num));
-        console.log(parseInt(num));
-    })
-
-    $("#num-5").click(() => {
-        num += 5;
-        $("#painel").text(parseInt(num));
-        console.log(num);
-    })
-
-    $("#num-6").click(() => {
-        num += 6;
-        $("#painel").text(parseInt(num));
-        console.log(num);
-    })
-
-    $("#num-7").click(() => {
-        num += 7;
-        $("#painel").text(parseInt(num));
-        console.log(num);
-    })
-
-    $("#num-8").click(() => {
-        num += 8;
-        $("#painel").text(parseInt(num));
-        console.log(num);
-    })
-
-    $("#num-9").click(() => {
-        num += 9;
-        $("#painel").text(parseInt(num));
-        console.log(num);
-    })
+    //Se o 0 for o 1º nº.
+    $("#num-0").click(function () {
+        num += $(this).text();
+        $("#painel").text(num);
+        if (num.length == 1) num = '';
+        tamanhoCampo(num);
+    });
+    
+    $("#num-1, #num-2, #num-3, #num-4, #num-5, #num-6, #num-7, #num-8, #num-9, #dot").click(function () {
+        num += $(this).text();
+        $("#painel").text(num);
+        tamanhoCampo(num);
+    });
 
     // Operações
-  
+    $("#add, #sub, #mult, #div").click(function () {
+        switch ($(this).text()) {
+            case '+':
+                num += '+';
+                $("#painel").text(num);
+                break;
+                
+            case '-':
+                num += '-';
+                $("#painel").text(num);
+                break;
+
+            case '*':
+                num += '*';
+                $("#painel").text(num);
+                break;
+
+            case '/':
+                num += '/';
+                $("#painel").text(num);
+                break;
+
+            default:
+                break;
+        }
+    });
+    
+    //Máximo de caracteres permitido.
+    function tamanhoCampo(nm) {
+        if (nm.length > 16) num = nm.substring(0, 16);
+    }
 });
