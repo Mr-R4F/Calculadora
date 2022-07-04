@@ -9,6 +9,7 @@ body {
     background: #373B44;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-attachment: fixed;
     zoom: 125%;
 }
 
@@ -130,7 +131,7 @@ button:active:not(#num-0, #num-1, #num-2, #num-3, #num-4,
 }
 
 #div, #mult, #sub, #add, #ac, #del {
-    background-color: #cbcbcb;
+    background-color: #CBCBCB;
 }
 
 #equal {
@@ -138,24 +139,23 @@ button:active:not(#num-0, #num-1, #num-2, #num-3, #num-4,
 }
 
 #equal:active {
-    background-color: #00a2ff;
+    background-color: #00A2FF;
 }
 
 /* Ajuste do painel */
 #results, #painel {
     justify-content: flex-end;
-    padding: 0 2% 0 2%;
+    padding: 0 4% 0 2%;
     color: white;
-    height: auto;
-    word-break: break-all;
-    background-color: transparent;
 }
 
 #painel {
+    height: 70px;
     font-size: 45px;
 }
 
 #results {
+    height: 60px;
     font-size: x-large;
 }
 
