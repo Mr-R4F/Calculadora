@@ -145,7 +145,7 @@ button:active:not(#num-0, #num-1, #num-2, #num-3, #num-4,
 /* Ajuste do painel */
 #results, #painel {
     justify-content: flex-end;
-    padding: 0 4% 0 2%;
+    padding: 0 3.5% 0 2%;
     color: white;
 }
 
