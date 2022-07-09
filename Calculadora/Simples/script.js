@@ -1,8 +1,6 @@
 $(document).ready(function () {
-    let num = '';
-    let num2 = '';
-    let result = '';
-    let display = '';
+    let num, num2, result, display;
+    num=num2=result=display = '';
     let op = null;
     let i = 0;
 
@@ -13,11 +11,7 @@ $(document).ready(function () {
     $("#del").click(() => {
         $("#painel").text('0');
         $("#results").text('');
-
-        result = '';
-        num2 = '';
-        num = '';
-        display = '';
+        num=num2=result=display = '';
         op = null;
         i = 0;
     });
@@ -60,10 +54,9 @@ $(document).ready(function () {
             tamanhoCampo(num);
         } else {
             num2 += $(this).text();
-
             switch (num2) {
                 case '.':
-                    if ($("#painel").text() == '0') num2 = '0.'; //0
+                    if ($("#painel").text() == '0' || $("#painel").text() != '0') num2 = '0.'; //Ao inserir o ponto sem valor, o 0 é adicionado automaticamente.
                     $("#painel").text(num2);
                     break;
             
@@ -83,18 +76,15 @@ $(document).ready(function () {
     // Operações.
     $("#add, #sub, #mult, #div, #equal").click(function () {
         switch ($(this).text()) {
+            //Operação contínua
             case '+':
                 op = ' + ';
                 if (i == 0) { // num1
                     operador(op);
                 } else { // num2
-                    console.log(num)
                     result = somar(num, num2);
-                    display = result + op;
-                    num = result;
-                    $("#painel").text(display);
-                    $("#results").text(result);
-                    num2 = '';
+                    console.log(num, num2)
+                    resultado(result, display);
                 }
             break;
 
@@ -103,12 +93,9 @@ $(document).ready(function () {
                 if (i == 0) {
                     operador(op);
                 } else {
+                    console.log(num, num2)
                     result = subtrair(num, num2);
-                    display = result + op;
-                    num = result;
-                    $("#painel").text(display);
-                    $("#results").text(result);
-                    num2 = '';
+                    resultado(result, display);
                 }
             break;
 
@@ -117,12 +104,9 @@ $(document).ready(function () {
                 if (i == 0) {
                     operador(op);
                 } else {
+                    console.log(num, num2)
                     result = multiplicar(num, num2);
-                    display = result + op;
-                    num = result;
-                    $("#painel").text(display);
-                    $("#results").text(result);
-                    num2 = '';
+                    resultado(result, display);
                 }
             break;
 
@@ -131,40 +115,39 @@ $(document).ready(function () {
                 if (i == 0) {
                     operador(op);
                 } else {
+                    console.log(num, num2)
                     result = dividir(num, num2);
-                    display = result + op;
-                    num = result;
-                    $("#painel").text(display);
-                    $("#results").text(result);
-                    num2 = '';
+                    resultado(result, display);
                 }
             break;
 
+            //Operação normal, podendo ser contínua.
             case '=':
                 switch (op) {
-                    case '+':
-                        console.log(num)
+                    case ' + ':
                         result = somar(num, num2);
-                        display = (result - num2) + op + num2;
-                        num = result;
-                        $("#painel").text(display);
-                        $("#results").text(result);
-                        result = '';
-                        console.log(display)
-                        num2 = '';
-                        i = 2; 
+                        display = (parseFloat(result) - parseFloat(num2)) + op + parseFloat(num2);
+                        resultado2(result, display);
                         break;
 
-                    case '-':
+                    case ' - ':
                         result = subtrair(num, num2);
-                        console.log((result + num2) + op + num2);
-                        display = (parseFloat(num2) + result) + op + parseFloat(num2);
-                        console.log(display);
-                        $("#painel").text(display);
-                        $("#results").text(result);
-                        i = 2;
+                        display = (parseFloat(result) + parseFloat(num2)) + op + parseFloat(num2);
+                        resultado2(result, display);
                         break;
-                
+
+                    case ' * ':
+                        result = multiplicar(num, num2);
+                        display = (parseFloat(num)) + op + parseFloat(num2);
+                        resultado2(result, display);
+                        break;
+
+                    case ' / ':
+                        result = dividir(num, num2);
+                        display = (parseFloat(num)) + op + parseFloat(num2);
+                        resultado2(result, display);
+                        break;
+
                     default:
                         break;
                 }
@@ -177,29 +160,22 @@ $(document).ready(function () {
 
     //
     function somar(nm, nm2) {
-        result = parseFloat(nm) + parseFloat(nm2);
-        return result;
+        return result = parseFloat(nm) + parseFloat(nm2);
     }
 
     function subtrair(nm, nm2) {     
-        result = parseFloat(nm) - parseFloat(nm2);
-        console.log(result)
-        return result;
+        return result = parseFloat(nm) - parseFloat(nm2);
     }
 
     function multiplicar(nm, nm2) {     
-        result = parseFloat(nm) * parseFloat(nm2);
-        console.log(result)
-        return result;
+        return result = parseFloat(nm) * parseFloat(nm2);
     }
 
     function dividir(nm, nm2) {     
-        result = parseFloat(nm) / parseFloat(nm2);
-        console.log(result)
-        return result;
+        return result = parseFloat(nm) / parseFloat(nm2);
     }
 
-    //
+    //Verifica operador.
     function operador(op) {
         if ($("#painel").text() == '0') {
             num = '0' + op;
@@ -208,6 +184,24 @@ $(document).ready(function () {
             $("#painel").text(num + op);
         }
         i = 1; //ativa a entrada do segundo valor (num2).
+    }
+
+    //Mostra resultado na tela. 
+    //Operação sem o igual
+    function resultado(result) {
+        display = result + op;
+        $("#painel").text(display);
+        $("#results").text(result);
+        num2 = '';
+        num = result;
+    }
+
+    //Operação com o igual.
+    function resultado2(result, display) {
+        $("#painel").text(display);
+        $("#results").text(result); 
+        op == ' + ' || op == ' - ' ? num2 = 0 : num2 = 1;
+        num = result;
     }
 
     //Máximo de caracteres permitido.
