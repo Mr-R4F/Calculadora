@@ -79,7 +79,6 @@ $(document).ready(function () {
             //Operação contínua
             case '+':
                 op = ' + ';
-                if (c == 1) num2 = 0;
                 if (i == 0) { // num1
                     operador(op);
                 } else { // num2
@@ -87,11 +86,11 @@ $(document).ready(function () {
                     result = somar(num, num2);
                     resultado(result);
                 }
+                console.log(num)
                 break;
 
             case '-':
-                op = ' - ';
-                if (c == 1) num2 = 0;
+                op = ' - '; 
                 if (i == 0) {
                     operador(op);
                 } else {
@@ -102,7 +101,6 @@ $(document).ready(function () {
 
             case '*':
                 op = ' * ';
-                if (c == 1) num2 = 1;
                 if (i == 0) {
                     operador(op);
                 } else {
@@ -112,8 +110,7 @@ $(document).ready(function () {
                 break;
 
             case '/':
-                op = ' / ';
-                if (c == 1) num2 = 1;
+                op = ' / ';       
                 if (i == 0) {
                     operador(op);
                 } else {
@@ -121,7 +118,7 @@ $(document).ready(function () {
                     resultado(result);
                 }
                 break;
-/*  *** */
+                /*
             case '+/-':
                 if (i == 0) {
                     num = `(- ${num})`;
@@ -131,6 +128,7 @@ $(document).ready(function () {
                     $("#painel").text(num2); 
                 }
                 break;
+            */
 
             /* Operação normal, podendo ser contínua. 
             (se depois que pressionado o igual, quiser continuar 
@@ -140,13 +138,13 @@ $(document).ready(function () {
                 switch (op) {
                     case ' + ':
                         result = somar(num, num2);
-                        display = (parseFloat(result) - parseFloat(num2)) + op + parseFloat(num2); //mostra valor na tela*.
+                        display = (parseFloat(result) + parseFloat(num2)) + op + parseFloat(num2); //mostra valor na tela*.
                         resultado2(result, display);
                         break;
 
                     case ' - ':
                         result = subtrair(num, num2);
-                        display = (parseFloat(result) + parseFloat(num2)) + op + parseFloat(num2); //*
+                        display = (parseFloat(result) - parseFloat(num2)) + op + parseFloat(num2); //*
                         resultado2(result, display);
                         break;
 
@@ -174,7 +172,6 @@ $(document).ready(function () {
 
     //
     function somar(nm, nm2) {
-        console.log(c)
         return result = parseFloat(nm) + parseFloat(nm2);
     }
 
@@ -204,25 +201,17 @@ $(document).ready(function () {
     //Mostra resultado na tela. 
     //Operação sem o igual
     function resultado(result) {
-        //Conta a partir do resultado.
-        if (c == 1 && (op == ' / ' || op == ' * ')) {
-            num2 = 1;
-        } else {
-            if (c == 1 && (op == ' + ' || op == ' - ')) num2 = 0;
-            else num2 = ''; //Caso não seja efetuado a partir do resultado.
-        }
-        //
         display = result + op;
         num = result;
+        num2 = '';
         $("#painel").text(display);
         $("#results").text(result);
-        if (num2 == 1 || num2 == 0) num2 = ''; //evita a junção dos outros números c/ esses.
     }
     
     //Operação com o igual.
     function resultado2(result, display) {  
         $("#painel").text(display);
-        $("#results").text(result); 
+        isNaN(result) ? $("#results").text('0') : $("#results").text(result); 
         num = result;
     }
 
@@ -234,5 +223,6 @@ $(document).ready(function () {
 
 /*FALTA CORRIGIR
 - EVITAR MAIS PONTOS / OPERADORES
+- MAIS BUGS.
 - OPERAÇÕES C/ NºS NEGATIVOS
 */
