@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    let num, num2, result, display, op;
+    let num, num2, result, display, op, i, c;
     num = num2 = result = display = op = '';
-    let i = 0;
+    i = c = 0;
 
     //Padrão quando não há valor.
     $("#painel").text('0');
@@ -11,7 +11,7 @@ $(document).ready(function () {
         $("#painel").text('0');
         $("#results").text('');
         num = num2 = result = display = op = '';
-        i = 0;
+        i = c = 0;
     });
 
     // Apaga um único item.
@@ -30,9 +30,7 @@ $(document).ready(function () {
             }
         } else { //Ao apagar (tudo do painel) e quiser usar o valor do resultado para efetuar outra conta.
             $("#painel").text('0');
-            num2 = 0; //0, pois com string fica NaN.
-            if (op == ' / ')  num2 = 1;
-            console.log(num, num2)
+            c = 1; //conta.
         }
     });
 
@@ -81,9 +79,11 @@ $(document).ready(function () {
             //Operação contínua
             case '+':
                 op = ' + ';
+                if (c == 1) num2 = 0;
                 if (i == 0) { // num1
                     operador(op);
                 } else { // num2
+                    console.log(c)
                     result = somar(num, num2);
                     resultado(result);
                 }
@@ -91,6 +91,7 @@ $(document).ready(function () {
 
             case '-':
                 op = ' - ';
+                if (c == 1) num2 = 0;
                 if (i == 0) {
                     operador(op);
                 } else {
@@ -101,6 +102,7 @@ $(document).ready(function () {
 
             case '*':
                 op = ' * ';
+                if (c == 1) num2 = 1;
                 if (i == 0) {
                     operador(op);
                 } else {
@@ -111,6 +113,7 @@ $(document).ready(function () {
 
             case '/':
                 op = ' / ';
+                if (c == 1) num2 = 1;
                 if (i == 0) {
                     operador(op);
                 } else {
@@ -171,6 +174,7 @@ $(document).ready(function () {
 
     //
     function somar(nm, nm2) {
+        console.log(c)
         return result = parseFloat(nm) + parseFloat(nm2);
     }
 
@@ -186,7 +190,7 @@ $(document).ready(function () {
         return result = parseFloat(nm) / parseFloat(nm2);
     }
 
-    //Verifica operador.
+    //Verifica operador e mostra.
     function operador(op) {
         if ($("#painel").text() == '0') {
             num = '0' + op;
@@ -200,11 +204,19 @@ $(document).ready(function () {
     //Mostra resultado na tela. 
     //Operação sem o igual
     function resultado(result) {
+        //Conta a partir do resultado.
+        if (c == 1 && (op == ' / ' || op == ' * ')) {
+            num2 = 1;
+        } else {
+            if (c == 1 && (op == ' + ' || op == ' - ')) num2 = 0;
+            else num2 = ''; //Caso não seja efetuado a partir do resultado.
+        }
+        //
         display = result + op;
+        num = result;
         $("#painel").text(display);
         $("#results").text(result);
-        num2 = '';
-        num = result;
+        if (num2 == 1 || num2 == 0) num2 = ''; //evita a junção dos outros números c/ esses.
     }
     
     //Operação com o igual.
@@ -219,3 +231,8 @@ $(document).ready(function () {
         if (nm.length >= 16) num = nm.substring(0, 15);
     }
 });
+
+/*FALTA CORRIGIR
+- EVITAR MAIS PONTOS / OPERADORES
+- OPERAÇÕES C/ NºS NEGATIVOS
+*/
