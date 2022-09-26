@@ -15,12 +15,6 @@ $(document).ready(function () {
             if (num2 == '0' && num2.length == 1) num2 = '';
             num2.length == 0 ? $("#results").text('0') : $("#results").text(num2);   
         }
-
-        if (num1 && num2) {
-            $("#painel").text('');
-            $("#painel").css("font-size", '42px');
-            $("#results").text(result);
-        }
     });
 
     $("#del").click(() => { //apaga tudo
@@ -66,8 +60,6 @@ $(document).ready(function () {
     $("#add, #sub, #mult, #div, #equal, #neg").click(function () {
         switch ($(this).text()) { //se clicar
             case '+':
-                if (op != null) result = sum(num1, num2);
-                console.log(op != null)
                 operator(' + ');
                 showResultsWithOutEqual();
                 num2 = '';
@@ -130,6 +122,7 @@ $(document).ready(function () {
             default:
                 break;
         }
+
         $("#painel").text(parseFloat(num1) + op + parseFloat(num2));
         resizeText();
         if (isNaN(result) || result == Infinity) result = '0'; //se o nº for dividido por zero.
@@ -148,8 +141,7 @@ $(document).ready(function () {
     }
 
     //Operações
-    function sum(nm1, nm2) {
-       
+    function sum(nm1, nm2) {  
         return parseFloat(nm1) + parseFloat(nm2);
     }
 
