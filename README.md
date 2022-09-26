@@ -1,2 +1,3 @@
-# Trabalhos
-Pequenos projetos aqui 😀
+# Calculadora
+
+📌Calculadora desenvolvida em HTML, CSS e JS
