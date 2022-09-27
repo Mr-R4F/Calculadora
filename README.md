@@ -1,3 +1,3 @@
 # Calculadora
 
-📌Calculadora desenvolvida em HTML, CSS e JS
+📌Calculadora desenvolvida em HTML, CSS e JS (jQuery)
